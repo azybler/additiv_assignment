@@ -1,0 +1,15 @@
+const express = require('express');
+const cors = require('cors')
+
+const {
+  getEmployees,
+  getEmployeesByEmployeeName,
+} = require('./handlers');
+
+module.exports = () => {
+  const app = express();
+  app.use(cors());
+  app.get('/employees', getEmployees);
+  app.get('/employees/:employeeName', getEmployeesByEmployeeName);
+  return app;
+};

@@ -9,7 +9,6 @@ const App = () => {
       <Router>
         <Home path="/" />
         <Overview path="/overview/:employeeName" />
-        <Overview path="/overview?name=:employeeName" />
       </Router>
     </div>
   );
