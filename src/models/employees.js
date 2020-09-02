@@ -5,7 +5,7 @@ const fetchEmployees = async (employeeName) => {
   const cache = {};
   const employees = {};
   try {
-    const result = await fetchEmployeesHelper(employeeName, cache, employees);
+    await fetchEmployeesHelper(employeeName, cache, employees);
     return Object.keys(employees);
   } catch (ex) {
     throw ex;
