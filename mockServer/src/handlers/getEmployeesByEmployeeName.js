@@ -1,8 +1,8 @@
-const data = require('../../data');
+const employeesStructure = require('../../data');
 
 const getEmployeesByEmployeeName = (req, res) => {
   const { employeeName } = req.params;
-  const payload = data[employeeName];
+  const payload = employeesStructure[employeeName];
   if (payload !== undefined) {
     return res.send(payload);
   }

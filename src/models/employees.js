@@ -1,5 +1,5 @@
-const DATA_API_URI = `http://api.additivasia.io/api/v1/assignment/employees`;
-// const DATA_API_URI = `http://localhost:8012/employees`;
+// const DATA_API_URI = `http://api.additivasia.io/api/v1/assignment/employees`;
+const DATA_API_URI = `http://localhost:8012/employees`;
 
 const fetchEmployees = async (employeeName) => {
   const cache = {};

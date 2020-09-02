@@ -35,7 +35,7 @@ const Home = () => {
       if (employees.length === 0) {
         setErrMsg('No subordinates for this employee is found.');
       } else {
-        navigate(`overview/${employeeName}`, { state: { employees } });
+        navigate(`/overview/${employeeName}`, { state: { employees } });
       }
     } catch (ex) {
       setLoading(false);
