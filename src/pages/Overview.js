@@ -11,6 +11,6 @@ const Overview = (props) => {
       </div>
     </div>
   );
-}
+};
 
 export default Overview;

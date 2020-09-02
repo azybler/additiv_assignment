@@ -3,7 +3,7 @@ import { Router } from '@reach/router';
 import Home from './pages/Home';
 import Overview from './pages/Overview';
 
-function App() {
+const App = () => {
   return (
     <div className="bg-gray-200 antialiased">
       <Router>
@@ -13,6 +13,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;
