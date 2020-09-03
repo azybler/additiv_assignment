@@ -1,4 +1,4 @@
-const employeesStructure = require('../../data');
+const employeesStructure = require('../data');
 
 const getEmployeesByEmployeeName = (req, res) => {
   const { employeeName } = req.params;

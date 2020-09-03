@@ -1,8 +1,8 @@
-const app = require('./src/app');
+const app = require('./app');
 
 const port = 8012;
 
-const { index } = require('./src/search');
+const { index } = require('./search');
 
 const employeesStructure = require('./data');
 
