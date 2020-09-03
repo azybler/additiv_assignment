@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { navigate } from '@reach/router';
-import fetchEmployees from '../models/employees';
+import { fetchEmployees } from '../models/employees';
 
 const Overview = (props) => {
   const { employeeName } = props;

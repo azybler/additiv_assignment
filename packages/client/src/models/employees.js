@@ -1,5 +1,20 @@
-// const DATA_API_URI = `http://api.additivasia.io/api/v1/assignment/employees`;
+import fetchWithTimeout from '../helpers/fetchWithTimeout';
+
 const DATA_API_URI = `http://localhost:8012/employees`;
+
+const fetchAutocompleteEmployeeName = async (keywords) => {
+  const requestURI = `${DATA_API_URI}/autocomplete/${encodeURIComponent(keywords)}`;
+  try {
+    const results = await fetchWithTimeout(requestURI, 200);
+    if (results.status === 200) {
+      let data = await results.json();
+      return data;
+      // const { setAutocompleteEmployees } = props;
+      // setAutocompleteEmployees(data);
+    }
+  } catch (ex) {
+  }
+};
 
 const fetchEmployees = async (employeeName) => {
   const cache = {};
@@ -19,7 +34,7 @@ const fetchEmployeesHelper = async (employeeName, cache, employees) => {
   }
   const requestURI = `${DATA_API_URI}/${encodeURIComponent(employeeName)}`;
   try {
-    const results = await fetch(requestURI);
+    const results = await fetchWithTimeout(requestURI, 200);
     if (results.status === 200) {
       let data = await results.json();
       cache[employeeName] = data;
@@ -41,4 +56,4 @@ const fetchEmployeesHelper = async (employeeName, cache, employees) => {
   }
 };
 
-export default fetchEmployees;
+export { fetchAutocompleteEmployeeName, fetchEmployees };

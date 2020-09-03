@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { navigate } from '@reach/router';
 import EmployeeSearchForm from '../components/EmployeeSearchForm';
 import ErrorDisplay from '../components/ErrorDisplay';
-import fetchEmployees from '../models/employees';
+import { fetchEmployees } from '../models/employees';
 
 const Home = () => {
   const props = {};

@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
+import { fetchAutocompleteEmployeeName } from '../models/employees';
 
 const EmployeeSearchForm = ({ loading, onSearchClick }) => {
   const props = {};
 
-  const fetchAutocompleteEmployeeName = debounce(async (keywords) => {
-    const requestURI = `http://localhost:8012/employees/autocomplete/${encodeURIComponent(keywords)}`;
+  const debouncedFetchAutocompleteEmployeeName = debounce(async (keywords) => {
+    const { setAutocompleteEmployees } = props;
     try {
-      const results = await fetch(requestURI);
-      if (results.status === 200) {
-        let data = await results.json();
-        const { setAutocompleteEmployees } = props;
-        setAutocompleteEmployees(data);
-      }
+      const res = await fetchAutocompleteEmployeeName(keywords);
+      setAutocompleteEmployees(res);
     } catch (ex) {
+      setAutocompleteEmployees([]);
     }
   }, 100);
 
-  const autocompleteEmployeeName = (ev) => {
+  const autocompleteEmployeeName = async (ev) => {
     if (ev.target.value.length === 0) {
       const { setAutocompleteEmployees } = props;
       setAutocompleteEmployees([]);
       return;
     }
-    fetchAutocompleteEmployeeName(ev.target.value);
+    debouncedFetchAutocompleteEmployeeName(ev.target.value);
   };
 
   const navigateAutocomplete = (ev) => {
