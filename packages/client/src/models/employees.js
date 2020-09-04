@@ -7,10 +7,8 @@ const fetchAutocompleteEmployeeName = async (keywords) => {
   try {
     const results = await fetchWithTimeout(requestURI, 200);
     if (results.status === 200) {
-      let data = await results.json();
+      const data = await results.json();
       return data;
-      // const { setAutocompleteEmployees } = props;
-      // setAutocompleteEmployees(data);
     }
   } catch (ex) {
   }
@@ -36,7 +34,7 @@ const fetchEmployeesHelper = async (employeeName, cache, employees) => {
   try {
     const results = await fetchWithTimeout(requestURI, 200);
     if (results.status === 200) {
-      let data = await results.json();
+      const data = await results.json();
       cache[employeeName] = data;
       if (data.length === 2) {
         const directSubordinates = data[1]['direct-subordinates'];
