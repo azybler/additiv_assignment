@@ -44,6 +44,10 @@ const fetchEmployeesHelper = async (employeeName, cache, employees) => {
           employees[employeeName] = 1;
           promises.push(fetchEmployeesHelper(employeeName, cache, employees));
         }
+        // Use Promise.all to run in parallel, unfortunately that means that if
+        // names are appended to an array, there could be duplicate of names.
+        // to fix this, names are added to a hash table and names are
+        // extracted from the hash table.
         return Promise.all(promises);
       }
     } else {
