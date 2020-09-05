@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { navigate } from '@reach/router';
 import EmployeeSearchForm from '../components/EmployeeSearchForm';
-import ErrorDisplay from '../components/ErrorDisplay';
+import ErrorBadge from '../components/ErrorBadge';
 import { fetchEmployees } from '../models/employees';
 
 const Home = () => {
-  const props = {};
+  // loading is used to disable the form while form is being submited and processing by server
+  const [loading, setLoading] = useState(false);
+
+  // errMsg determines the error message to show
+  const [errMsg, setErrMsg] = useState('');
 
   const onSearchClick = async (ev) => {
     // Prevent the default behavior of HTMl5 form submitting
     ev.preventDefault();
-
-    const { setLoading, setErrMsg } = props;
 
     // Disable the form while form is being submited and processing by server
     setLoading(true);
@@ -43,26 +45,21 @@ const Home = () => {
     }
   };
 
-  // loading is used to disable the form while form is being submited and processing by server
-  const [loading, setLoading] = useState(false);
-  props.setLoading = setLoading;
-
-  // errKind determines the kind of error to show
-  const [errMsg, setErrMsg] = useState('');
-  props.setErrMsg = setErrMsg;
-
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="text-center h-64 max-w-md text-gray-600">
-        <h1 className="text-4xl font-bold text-blue-600">
-          Employee Explorer
-        </h1>
-        <div className="mt-6 inline-flex">
-          <EmployeeSearchForm
-            loading={loading}
-            onSearchClick={onSearchClick} />
+    <div>
+      <ErrorBadge errMsg={errMsg} setErrMsg={setErrMsg} />
+      <div className="h-screen flex justify-center items-center">
+        <div className="text-center h-64 max-w-md text-gray-600">
+          <h1 className="text-4xl font-bold text-blue-600">
+            Employee Explorer
+          </h1>
+          <div className="mt-6 inline-flex">
+            <EmployeeSearchForm
+              loading={loading}
+              onSearchClick={onSearchClick}
+            />
+          </div>
         </div>
-        <ErrorDisplay errMsg={errMsg} />
       </div>
     </div>
   );

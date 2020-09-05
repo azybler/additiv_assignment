@@ -3,13 +3,29 @@ import debounce from 'lodash/debounce';
 import { fetchAutocompleteEmployeeName } from '../models/employees';
 
 const EmployeeSearchForm = ({ loading, onSearchClick }) => {
-  const props = {};
+  const [autocompleteEmployees, setAutocompleteEmployees] = useState([]);
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selectPrev = () => {
+    if (selectedIndex !== 0) {
+      setSelectedIndex(selectedIndex-1);
+    }
+  };
+  const selectNext = () => {
+    setSelectedIndex(selectedIndex+1);
+  };
 
   const debouncedFetchAutocompleteEmployeeName = debounce(async (keywords) => {
-    const { setAutocompleteEmployees } = props;
     try {
       const res = await fetchAutocompleteEmployeeName(keywords);
-      setAutocompleteEmployees(res);
+      if (res.length === 0) {
+        setAutocompleteEmployees([]);  
+      } else {
+        setAutocompleteEmployees(res);
+        if (selectedIndex >= res.length) {
+          setSelectedIndex(0);
+        }
+      }
     } catch (ex) {
       setAutocompleteEmployees([]);
     }
@@ -17,7 +33,6 @@ const EmployeeSearchForm = ({ loading, onSearchClick }) => {
 
   const autocompleteEmployeeName = async (ev) => {
     if (ev.target.value.length === 0) {
-      const { setAutocompleteEmployees } = props;
       setAutocompleteEmployees([]);
       return;
     }
@@ -25,7 +40,6 @@ const EmployeeSearchForm = ({ loading, onSearchClick }) => {
   };
 
   const navigateAutocomplete = (ev) => {
-    const { selectedIndex, selectPrev, selectNext } = props;
     if (ev.keyCode === 38) {
       // up key
       selectPrev();
@@ -37,26 +51,9 @@ const EmployeeSearchForm = ({ loading, onSearchClick }) => {
     } else if (ev.keyCode === 13) {
       // enter
       ev.target.value = autocompleteEmployees[selectedIndex];
-      const { setAutocompleteEmployees } = props;
       setAutocompleteEmployees([]);
     }
   };
-
-  const [autocompleteEmployees, setAutocompleteEmployees] = useState([]);
-  props.autocompleteEmployees = autocompleteEmployees;
-  props.setAutocompleteEmployees = setAutocompleteEmployees;
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  props.selectPrev = () => {
-    if (selectedIndex !== 0) {
-      setSelectedIndex(selectedIndex-1);
-    }
-  };
-  props.selectNext = () => {
-    setSelectedIndex(selectedIndex+1);
-  };
-  props.selectedIndex = selectedIndex;
-  props.setSelectedIndex = setSelectedIndex;
 
   return (
     <form onSubmit={onSearchClick}>
@@ -69,7 +66,6 @@ const EmployeeSearchForm = ({ loading, onSearchClick }) => {
         onKeyUp={autocompleteEmployeeName}
         onKeyDown={navigateAutocomplete}
       />
-
       <div className="autocomplete-menu">
         {autocompleteEmployees.map((employee, index) =>
           <span
@@ -82,7 +78,6 @@ const EmployeeSearchForm = ({ loading, onSearchClick }) => {
           </span>
         )}
       </div>
-
       <input
         type="submit"
         value="Search"

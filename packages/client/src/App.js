@@ -5,12 +5,10 @@ import Overview from './pages/Overview';
 
 const App = () => {
   return (
-    <div className="bg-gray-200 antialiased">
-      <Router>
-        <Home path="/" />
-        <Overview path="/overview/:employeeName" />
-      </Router>
-    </div>
+    <Router className="bg-gray-200 antialiased">
+      <Home path="/" />
+      <Overview path="/overview/:employeeName" />
+    </Router>
   );
 };
 
